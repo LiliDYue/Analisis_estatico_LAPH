@@ -11,6 +11,6 @@
     "globals": "^17.2.0"
   },
   "dependencies": {
-    "pre-commit": "^1.2.2"
+    "pre-commit": "^1.0.10"
   }
 }
