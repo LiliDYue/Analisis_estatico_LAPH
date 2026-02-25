@@ -85,7 +85,7 @@ class TestWhiteBox(unittest.TestCase):
         """
         self.assertEqual(is_triangle(2, 1, 1), "No, it's not a triangle.")
 
-#1
+# 1
 class TestStatus(unittest.TestCase):
     """
     White-box unittest class for number status
@@ -108,7 +108,7 @@ class TestStatus(unittest.TestCase):
         """
         self.assertEqual(check_number_status(0), "Zero")
 
-#2
+# 2
 class TestPassword(unittest.TestCase):
     """
     White-box unittest class for validates user passwords.
@@ -149,7 +149,7 @@ class TestPassword(unittest.TestCase):
         """
         self.assertFalse(validate_password('AFEOeRe9'))
 
-#3
+# 3
 class TestDiscount(unittest.TestCase):
     """
     White-box unittest class for calculate total discount.
@@ -173,7 +173,7 @@ class TestDiscount(unittest.TestCase):
         """
         self.assertEqual(calculate_total_discount(600), 120)
 
-#4
+# 4
 class TestOrderTotal(unittest.TestCase):
     """
     White-box unittest class for calculate order total.
@@ -200,7 +200,7 @@ class TestOrderTotal(unittest.TestCase):
         items = [{"quantity": 11, "price": 10}]
         self.assertEqual(calculate_order_total(items), 99)
 
-#5
+# 5
 class TestShippingCost(unittest.TestCase):
     """
     White-box unittest class for calculate items shipping cost.
@@ -256,7 +256,7 @@ class TestShippingCost(unittest.TestCase):
         with self.assertRaises(ValueError):
             calculate_items_shipping_cost(items, "invalid")
 
-#6
+# 6
 class TestLogin(unittest.TestCase):
     """
     White-box unittest class for validate login.
@@ -280,7 +280,7 @@ class TestLogin(unittest.TestCase):
         """
         self.assertEqual(validate_login("usuario1", "pass"), "Login Failed")
 
-#7
+# 7
 class TestAge(unittest.TestCase):
     """
     White-box unittest class for verify age.
@@ -298,7 +298,7 @@ class TestAge(unittest.TestCase):
         """
         self.assertEqual(verify_age(17), "Not Eligible")
 
-#8
+# 8
 class TestProductCategory(unittest.TestCase):
     """
     White-box unittest class for categorize product.
@@ -328,7 +328,7 @@ class TestProductCategory(unittest.TestCase):
         """
         self.assertEqual(categorize_product(5), "Category D")
 
-#9
+# 9
 class TestEmail(unittest.TestCase):
     """
     White-box unittest class for validate email.
@@ -346,7 +346,7 @@ class TestEmail(unittest.TestCase):
         """
         self.assertEqual(validate_email("testemail.com"), "Invalid Email")
 
-#10
+# 10
 class TestTemperature(unittest.TestCase):
     """
     White-box unittest class for convert Celsius to Fahrenheit.
@@ -364,7 +364,7 @@ class TestTemperature(unittest.TestCase):
         """
         self.assertEqual(celsius_to_fahrenheit(150), "Invalid Temperature")
 
-#11
+# 11
 class TestCreditCard(unittest.TestCase):
     """
     White-box unittest class for validate credit card.
@@ -382,7 +382,7 @@ class TestCreditCard(unittest.TestCase):
         """
         self.assertEqual(validate_credit_card("abcd1234"), "Invalid Card")
 
-#12
+# 12
 class TestDate(unittest.TestCase):
     """
     White-box unittest class for validate date.
@@ -400,7 +400,7 @@ class TestDate(unittest.TestCase):
         """
         self.assertEqual(validate_date(1800, 13, 40), "Invalid Date")
 
-#13
+# 13
 class TestFlightEligibility(unittest.TestCase):
     """
     White-box unittest class for check flight eligibility.
@@ -424,7 +424,7 @@ class TestFlightEligibility(unittest.TestCase):
         """
         self.assertEqual(check_flight_eligibility(10, False), "Not Eligible to Book")
 
-#14
+# 14
 class TestURL(unittest.TestCase):
     """
     White-box unittest class for validate URL.
@@ -442,7 +442,7 @@ class TestURL(unittest.TestCase):
         """
         self.assertEqual(validate_url("ftp://example.com"), "Invalid URL")
 
-#15
+# 15
 class TestQuantityDiscount(unittest.TestCase):
     """
     White-box unittest class for calculate quantity discount.
@@ -466,7 +466,7 @@ class TestQuantityDiscount(unittest.TestCase):
         """
         self.assertEqual(calculate_quantity_discount(15), "10% Discount")
 
-#16
+# 16
 class TestFileSize(unittest.TestCase):
     """
     White-box unittest class for check file size.
@@ -484,7 +484,7 @@ class TestFileSize(unittest.TestCase):
         """
         self.assertEqual(check_file_size(2000000), "Invalid File Size")
 
-#17
+# 17
 class TestLoanEligibility(unittest.TestCase):
     """
     White-box unittest class for check loan eligibility.
@@ -508,7 +508,7 @@ class TestLoanEligibility(unittest.TestCase):
         """
         self.assertEqual(check_loan_eligibility(70000, 800), "Premium Loan")
 
-#18
+# 18
 class TestShippingDimensions(unittest.TestCase):
     """
     White-box unittest class for calculate shipping cost by dimensions.
@@ -532,7 +532,7 @@ class TestShippingDimensions(unittest.TestCase):
         """
         self.assertEqual(calculate_shipping_cost(10, 50, 50, 50), 20)
 
-#19
+# 19
 class TestQuiz(unittest.TestCase):
     """
     White-box unittest class for grade quiz.
@@ -556,7 +556,7 @@ class TestQuiz(unittest.TestCase):
         """
         self.assertEqual(grade_quiz(3, 5), "Fail")
 
-#20
+# 20
 class TestAuthenticate(unittest.TestCase):
     """
     White-box unittest class for authenticate user.
@@ -580,7 +580,7 @@ class TestAuthenticate(unittest.TestCase):
         """
         self.assertEqual(authenticate_user("usr", "pass"), "Invalid")
 
-#21
+# 21
 class TestWeather(unittest.TestCase):
     """
     White-box unittest class for weather advisory.
