@@ -118,6 +118,7 @@ class TestPassword(unittest.TestCase):
     White-box unittest class for validates user passwords.
     """
     
+    
     def test_validate_password_valida(self):
         """
         Check validate user password
