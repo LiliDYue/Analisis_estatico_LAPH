@@ -91,6 +91,7 @@ class TestStatus(unittest.TestCase):
     """
     White-box unittest class for number status
     """
+
     def test_number_status_whit_positive(self):
         """
         Checks if a given number is positive.
@@ -116,6 +117,7 @@ class TestPassword(unittest.TestCase):
     """
     White-box unittest class for validates user passwords.
     """
+    
     def test_validate_password_valida(self):
         """
         Check validate user password
