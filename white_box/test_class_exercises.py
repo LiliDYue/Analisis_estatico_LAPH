@@ -5,7 +5,7 @@ White-box unit testing examples.
 """
 import unittest
 
-from white_box.class_exercises import * 
+from white_box.class_exercises import *
 
 
 class TestWhiteBox(unittest.TestCase):
@@ -85,6 +85,7 @@ class TestWhiteBox(unittest.TestCase):
         """
         self.assertEqual(is_triangle(2, 1, 1), "No, it's not a triangle.")
 
+
 # 1
 class TestStatus(unittest.TestCase):
     """
@@ -94,6 +95,7 @@ class TestStatus(unittest.TestCase):
         """
         Checks if a given number is positive.
         """
+
         self.assertEqual(check_number_status(5), "Positive")
 
     def test_number_status_with_negative(self):
@@ -108,6 +110,7 @@ class TestStatus(unittest.TestCase):
         """
         self.assertEqual(check_number_status(0), "Zero")
 
+
 # 2
 class TestPassword(unittest.TestCase):
     """
@@ -117,37 +120,38 @@ class TestPassword(unittest.TestCase):
         """
         Check validate user password
         """
-        self.assertTrue(validate_password('aE5!@#$%&'))
+        self.assertTrue(validate_password("aE5!@#$%&"))
 
     def test_validate_password_length_minor8(self):
         """
         Check the password with length < 8
         """
-        self.assertFalse(validate_password('afr'))
+        self.assertFalse(validate_password("afr"))
 
     def test_validate_pass_without_uppercase(self):
         """
         Check the password without uppercase
         """
-        self.assertFalse(validate_password('afffrw!9'))
+        self.assertFalse(validate_password("afffrw!9"))
 
     def test_validate_pass_without_lowercase(self):
         """
         Check the password without lowercase
         """
-        self.assertFalse(validate_password('AFEOGR!9'))
+        self.assertFalse(validate_password("AFEOGR!9"))
 
     def test_validate_pass_without_digits(self):
         """
         Check the password without digits
         """
-        self.assertFalse(validate_password('AFEOGR!e'))
+        self.assertFalse(validate_password("AFEOGR!e"))
 
     def test_validate_pass_without_specialchar(self):
         """
         Check the password without special character
         """
-        self.assertFalse(validate_password('AFEOeRe9'))
+        self.assertFalse(validate_password("AFEOeRe9"))
+
 
 # 3
 class TestDiscount(unittest.TestCase):
@@ -172,6 +176,7 @@ class TestDiscount(unittest.TestCase):
         Check discount when total amount is greater than 500
         """
         self.assertEqual(calculate_total_discount(600), 120)
+
 
 # 4
 class TestOrderTotal(unittest.TestCase):
@@ -200,6 +205,7 @@ class TestOrderTotal(unittest.TestCase):
         items = [{"quantity": 11, "price": 10}]
         self.assertEqual(calculate_order_total(items), 99)
 
+
 # 5
 class TestShippingCost(unittest.TestCase):
     """
@@ -219,7 +225,7 @@ class TestShippingCost(unittest.TestCase):
         """
         items = [{"weight": 7}]
         self.assertEqual(calculate_items_shipping_cost(items, "standard"), 15)
-    
+
     def test_standard_shipping_greater_10kg(self):
         """
         Check standard shipping when total weight is greater than 10
@@ -256,6 +262,7 @@ class TestShippingCost(unittest.TestCase):
         with self.assertRaises(ValueError):
             calculate_items_shipping_cost(items, "invalid")
 
+
 # 6
 class TestLogin(unittest.TestCase):
     """
@@ -280,6 +287,7 @@ class TestLogin(unittest.TestCase):
         """
         self.assertEqual(validate_login("usuario1", "pass"), "Login Failed")
 
+
 # 7
 class TestAge(unittest.TestCase):
     """
@@ -297,6 +305,7 @@ class TestAge(unittest.TestCase):
         Check eligibility when age is outside valid range
         """
         self.assertEqual(verify_age(17), "Not Eligible")
+
 
 # 8
 class TestProductCategory(unittest.TestCase):
@@ -328,6 +337,7 @@ class TestProductCategory(unittest.TestCase):
         """
         self.assertEqual(categorize_product(5), "Category D")
 
+
 # 9
 class TestEmail(unittest.TestCase):
     """
@@ -345,6 +355,7 @@ class TestEmail(unittest.TestCase):
         Check invalid email format
         """
         self.assertEqual(validate_email("testemail.com"), "Invalid Email")
+
 
 # 10
 class TestTemperature(unittest.TestCase):
@@ -364,6 +375,7 @@ class TestTemperature(unittest.TestCase):
         """
         self.assertEqual(celsius_to_fahrenheit(150), "Invalid Temperature")
 
+
 # 11
 class TestCreditCard(unittest.TestCase):
     """
@@ -382,6 +394,7 @@ class TestCreditCard(unittest.TestCase):
         """
         self.assertEqual(validate_credit_card("abcd1234"), "Invalid Card")
 
+
 # 12
 class TestDate(unittest.TestCase):
     """
@@ -399,6 +412,7 @@ class TestDate(unittest.TestCase):
         Check invalid date values
         """
         self.assertEqual(validate_date(1800, 13, 40), "Invalid Date")
+
 
 # 13
 class TestFlightEligibility(unittest.TestCase):
@@ -424,6 +438,7 @@ class TestFlightEligibility(unittest.TestCase):
         """
         self.assertEqual(check_flight_eligibility(10, False), "Not Eligible to Book")
 
+
 # 14
 class TestURL(unittest.TestCase):
     """
@@ -441,6 +456,7 @@ class TestURL(unittest.TestCase):
         Check invalid URL format
         """
         self.assertEqual(validate_url("ftp://example.com"), "Invalid URL")
+
 
 # 15
 class TestQuantityDiscount(unittest.TestCase):
@@ -466,6 +482,7 @@ class TestQuantityDiscount(unittest.TestCase):
         """
         self.assertEqual(calculate_quantity_discount(15), "10% Discount")
 
+
 # 16
 class TestFileSize(unittest.TestCase):
     """
@@ -483,6 +500,7 @@ class TestFileSize(unittest.TestCase):
         Check invalid file size
         """
         self.assertEqual(check_file_size(2000000), "Invalid File Size")
+
 
 # 17
 class TestLoanEligibility(unittest.TestCase):
@@ -508,6 +526,7 @@ class TestLoanEligibility(unittest.TestCase):
         """
         self.assertEqual(check_loan_eligibility(70000, 800), "Premium Loan")
 
+
 # 18
 class TestShippingDimensions(unittest.TestCase):
     """
@@ -531,6 +550,7 @@ class TestShippingDimensions(unittest.TestCase):
         Check shipping cost for large package
         """
         self.assertEqual(calculate_shipping_cost(10, 50, 50, 50), 20)
+
 
 # 19
 class TestQuiz(unittest.TestCase):
@@ -556,6 +576,7 @@ class TestQuiz(unittest.TestCase):
         """
         self.assertEqual(grade_quiz(3, 5), "Fail")
 
+
 # 20
 class TestAuthenticate(unittest.TestCase):
     """
@@ -579,6 +600,7 @@ class TestAuthenticate(unittest.TestCase):
         Check authentication failure
         """
         self.assertEqual(authenticate_user("usr", "pass"), "Invalid")
+
 
 # 21
 class TestWeather(unittest.TestCase):
