@@ -590,7 +590,10 @@ class TestWeather(unittest.TestCase):
         """
         Check advisory when temperature and humidity are high
         """
-        self.assertEqual(get_weather_advisory(35, 80), "High Temperature and Humidity. Stay Hydrated.")
+        self.assertEqual(
+            get_weather_advisory(35, 80),
+            "High Temperature and Humidity. Stay Hydrated.",
+        )
 
     def test_low_temperature(self):
         """
