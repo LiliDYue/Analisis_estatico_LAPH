@@ -534,4 +534,3 @@ class ElevatorSystem:
             return "Elevator stopped"
 
         return "Invalid operation in current state"
-    
