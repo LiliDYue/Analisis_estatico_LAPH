@@ -6,6 +6,11 @@ White-box unit testing examples.
 import unittest
 
 from white_box.class_exercises import (
+    DocumentEditingSystem,
+    ElevatorSystem,
+    TrafficLight,
+    UserAuthentication,
+    VendingMachine,
     authenticate_user,
     calculate_items_shipping_cost,
     calculate_order_total,
@@ -19,22 +24,17 @@ from white_box.class_exercises import (
     check_loan_eligibility,
     check_number_status,
     divide,
-    DocumentEditingSystem,
-    ElevatorSystem,
     get_grade,
     get_weather_advisory,
     grade_quiz,
     is_even,
     is_triangle,
-    TrafficLight,
-    UserAuthentication,
     validate_credit_card,
     validate_date,
     validate_email,
     validate_login,
     validate_password,
     validate_url,
-    VendingMachine,
     verify_age,
 )
 
