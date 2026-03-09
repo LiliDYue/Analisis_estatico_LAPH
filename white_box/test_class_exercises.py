@@ -5,7 +5,6 @@ White-box unit testing examples.
 """
 
 import unittest
-
 from unittest.mock import patch
 
 from white_box.class_exercises import (

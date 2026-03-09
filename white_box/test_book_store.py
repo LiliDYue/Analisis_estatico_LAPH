@@ -85,7 +85,6 @@ class TestBookStoreMain(unittest.TestCase):
     def test_main_exit(self, mocked_print, mocked_input):
         """Test that main prints exiting message when user chooses 4."""
         from white_box.book_store import main
-        
 
         main()
         mocked_print.assert_any_call("Exiting...")
@@ -96,7 +95,5 @@ class TestBookStoreMain(unittest.TestCase):
         """Test main displays books when store is empty."""
         from white_box.book_store import main
 
-
         main()
         mocked_print.assert_any_call("No books in the store.")
-        
