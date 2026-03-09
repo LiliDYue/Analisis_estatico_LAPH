@@ -3,6 +3,7 @@
 """
 White-box unit testing examples.
 """
+
 import unittest
 
 from unittest.mock import patch
