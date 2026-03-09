@@ -6,7 +6,7 @@ White-box unit testing of book store.
 import unittest
 from unittest.mock import patch
 
-from white_box.book_store import Book, BookStore
+from white_box.book_store import Book, BookStore, main
 
 
 class TestBook(unittest.TestCase):
@@ -82,18 +82,14 @@ class TestBookStoreMain(unittest.TestCase):
 
     @patch("builtins.input", side_effect=["4"])
     @patch("builtins.print")
-    def test_main_exit(self, mocked_print, mocked_input):
+    def test_main_exit(self, mocked_print, _):
         """Test that main prints exiting message when user chooses 4."""
-        from white_box.book_store import main
-
         main()
         mocked_print.assert_any_call("Exiting...")
 
     @patch("builtins.input", side_effect=["1", "4"])
     @patch("builtins.print")
-    def test_main_display_books_empty(self, mocked_print, mocked_input):
+    def test_main_display_books_empty(self, mocked_print, _):
         """Test main displays books when store is empty."""
-        from white_box.book_store import main
-
         main()
         mocked_print.assert_any_call("No books in the store.")
