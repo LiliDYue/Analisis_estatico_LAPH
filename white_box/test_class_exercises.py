@@ -1,4 +1,4 @@
-# pylint: disable=too-many-lines
+# pylint: disable=line-too-long, too-many-lines
 # -*- coding: utf-8 -*-
 
 """
@@ -1128,6 +1128,4 @@ class TestShoppingCart(unittest.TestCase):
         with patch("builtins.print") as mocked_print:
             self.cart.checkout()
             mocked_print.assert_any_call("Total: $1400")
-            mocked_print.assert_any_call(
-                "Checkout completed. Thank you for shopping!"
-            )
+            mocked_print.assert_any_call("Checkout completed. Thank you for shopping!")
