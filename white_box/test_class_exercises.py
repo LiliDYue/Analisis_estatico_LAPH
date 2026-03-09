@@ -6,6 +6,11 @@ White-box unit testing examples.
 import unittest
 
 from white_box.class_exercises import (
+    DocumentEditingSystem,
+    ElevatorSystem,
+    TrafficLight,
+    UserAuthentication,
+    VendingMachine,
     authenticate_user,
     calculate_items_shipping_cost,
     calculate_order_total,
@@ -656,3 +661,282 @@ class TestWeather(unittest.TestCase):
         Check advisory when no specific condition is met
         """
         self.assertEqual(get_weather_advisory(20, 50), "No Specific Advisory")
+
+
+# 22
+class TestVendingMachine(unittest.TestCase):
+    """
+    White-box unittest class for vending machine.
+    """
+
+    def setUp(self):
+        """
+        Creates a new vending machine instance before each test.
+        """
+        self.vending_machine = VendingMachine()
+
+    def test_vending_machine_initial_state(self):
+        """
+        Checks the vending machine starts in 'Ready' state.
+        """
+        self.assertEqual(self.vending_machine.state, "Ready")
+
+    def test_vending_machine_insert_coin_success(self):
+        """
+        Checks inserting a coin changes state from 'Ready' to 'Dispensing'.
+        """
+        output = self.vending_machine.insert_coin()
+
+        self.assertEqual(self.vending_machine.state, "Dispensing")
+        self.assertEqual(output, "Coin Inserted. Select your drink.")
+
+    def test_vending_machine_insert_coin_error(self):
+        """
+        Checks inserting a coin in 'Dispensing' state returns an error.
+        """
+        self.vending_machine.state = "Dispensing"
+
+        output = self.vending_machine.insert_coin()
+
+        self.assertEqual(self.vending_machine.state, "Dispensing")
+        self.assertEqual(output, "Invalid operation in current state.")
+
+    def test_vending_machine_select_drink_success(self):
+        """
+        Checks selecting a drink changes state from 'Dispensing' to 'Ready'.
+        """
+        self.vending_machine.state = "Dispensing"
+
+        output = self.vending_machine.select_drink()
+
+        self.assertEqual(self.vending_machine.state, "Ready")
+        self.assertEqual(output, "Drink Dispensed. Thank you!")
+
+    def test_vending_machine_select_drink_error(self):
+        """
+        Checks selecting a drink in 'Ready' state returns an error.
+        """
+        output = self.vending_machine.select_drink()
+
+        self.assertEqual(self.vending_machine.state, "Ready")
+        self.assertEqual(output, "Invalid operation in current state.")
+
+
+# 23
+class TestTrafficLight(unittest.TestCase):
+    """
+    White-box unittest class for traffic light.
+    """
+
+    def setUp(self):
+        """
+        Creates a new traffic light instance before each test.
+        """
+        self.traffic_light = TrafficLight()
+
+    def test_traffic_light_initial_state(self):
+        """
+        Checks traffic light starts in 'Red' state.
+        """
+        self.assertEqual(self.traffic_light.get_current_state(), "Red")
+
+    def test_traffic_light_red_to_green(self):
+        """
+        Checks state transition from 'Red' to 'Green'.
+        """
+        self.traffic_light.change_state()
+
+        self.assertEqual(self.traffic_light.get_current_state(), "Green")
+
+    def test_traffic_light_green_to_yellow(self):
+        """
+        Checks state transition from 'Green' to 'Yellow'.
+        """
+        self.traffic_light.state = "Green"
+        self.traffic_light.change_state()
+
+        self.assertEqual(self.traffic_light.get_current_state(), "Yellow")
+
+    def test_traffic_light_yellow_to_red(self):
+        """
+        Checks state transition from 'Yellow' to 'Red'.
+        """
+        self.traffic_light.state = "Yellow"
+        self.traffic_light.change_state()
+
+        self.assertEqual(self.traffic_light.get_current_state(), "Red")
+
+
+# 24
+class TestUserAuthentication(unittest.TestCase):
+    """
+    White-box unittest class for user authentication.
+    """
+
+    def setUp(self):
+        """
+        Creates a new user authentication instance before each test.
+        """
+        self.user_auth = UserAuthentication()
+
+    def test_user_auth_initial_state(self):
+        """
+        Checks user starts in 'Logged Out' state.
+        """
+        self.assertEqual(self.user_auth.state, "Logged Out")
+
+    def test_user_auth_login_success(self):
+        """
+        Checks login changes state from 'Logged Out' to 'Logged In'.
+        """
+        output = self.user_auth.login()
+
+        self.assertEqual(self.user_auth.state, "Logged In")
+        self.assertEqual(output, "Login successful")
+
+    def test_user_auth_login_error(self):
+        """
+        Checks login in 'Logged In' state returns an error.
+        """
+        self.user_auth.state = "Logged In"
+
+        output = self.user_auth.login()
+
+        self.assertEqual(self.user_auth.state, "Logged In")
+        self.assertEqual(output, "Invalid operation in current state")
+
+    def test_user_auth_logout_success(self):
+        """
+        Checks logout changes state from 'Logged In' to 'Logged Out'.
+        """
+        self.user_auth.state = "Logged In"
+
+        output = self.user_auth.logout()
+
+        self.assertEqual(self.user_auth.state, "Logged Out")
+        self.assertEqual(output, "Logout successful")
+
+    def test_user_auth_logout_error(self):
+        """
+        Checks logout in 'Logged Out' state returns an error.
+        """
+        output = self.user_auth.logout()
+
+        self.assertEqual(self.user_auth.state, "Logged Out")
+        self.assertEqual(output, "Invalid operation in current state")
+
+
+# 25
+class TestDocumentEditingSystem(unittest.TestCase):
+    """
+    White-box unittest class for document editing system.
+    """
+
+    def setUp(self):
+        """
+        Creates a new document editing system instance before each test.
+        """
+        self.document_system = DocumentEditingSystem()
+
+    def test_document_initial_state(self):
+        """
+        Checks document starts in 'Editing' state.
+        """
+        self.assertEqual(self.document_system.state, "Editing")
+
+    def test_document_save_success(self):
+        """
+        Checks saving changes state from 'Editing' to 'Saved'.
+        """
+        output = self.document_system.save_document()
+
+        self.assertEqual(self.document_system.state, "Saved")
+        self.assertEqual(output, "Document saved successfully")
+
+    def test_document_save_error(self):
+        """
+        Checks saving in 'Saved' state returns an error.
+        """
+        self.document_system.state = "Saved"
+
+        output = self.document_system.save_document()
+
+        self.assertEqual(self.document_system.state, "Saved")
+        self.assertEqual(output, "Invalid operation in current state")
+
+    def test_document_edit_success(self):
+        """
+        Checks editing changes state from 'Saved' to 'Editing'.
+        """
+        self.document_system.state = "Saved"
+
+        output = self.document_system.edit_document()
+
+        self.assertEqual(self.document_system.state, "Editing")
+        self.assertEqual(output, "Editing resumed")
+
+    def test_document_edit_error(self):
+        """
+        Checks editing in 'Editing' state returns an error.
+        """
+        output = self.document_system.edit_document()
+
+        self.assertEqual(self.document_system.state, "Editing")
+        self.assertEqual(output, "Invalid operation in current state")
+
+
+# 26
+class TestElevatorSystem(unittest.TestCase):
+    """
+    White-box unittest class for elevator system.
+    """
+
+    def setUp(self):
+        """
+        Creates a new elevator system instance before each test.
+        """
+        self.elevator_system = ElevatorSystem()
+
+    def test_elevator_initial_state(self):
+        """
+        Checks elevator starts in 'Idle' state.
+        """
+        self.assertEqual(self.elevator_system.state, "Idle")
+
+    def test_elevator_move_up_success(self):
+        """
+        Checks moving up changes state from 'Idle' to 'Moving Up'.
+        """
+        output = self.elevator_system.move_up()
+
+        self.assertEqual(self.elevator_system.state, "Moving Up")
+        self.assertEqual(output, "Elevator moving up")
+
+    def test_elevator_move_down_success(self):
+        """
+        Checks moving down changes state from 'Idle' to 'Moving Down'.
+        """
+        output = self.elevator_system.move_down()
+
+        self.assertEqual(self.elevator_system.state, "Moving Down")
+        self.assertEqual(output, "Elevator moving down")
+
+    def test_elevator_stop_success_from_up(self):
+        """
+        Checks stopping changes state from 'Moving Up' to 'Idle'.
+        """
+        self.elevator_system.move_up()
+
+        output = self.elevator_system.stop()
+
+        self.assertEqual(self.elevator_system.state, "Idle")
+        self.assertEqual(output, "Elevator stopped")
+
+    def test_elevator_stop_error(self):
+        """
+        Checks stopping in 'Idle' state returns an error.
+        """
+        output = self.elevator_system.stop()
+
+        self.assertEqual(self.elevator_system.state, "Idle")
+        self.assertEqual(output, "Invalid operation in current state")
