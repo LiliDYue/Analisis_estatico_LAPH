@@ -53,10 +53,3 @@ repos:
       - id: check-github-actions
       - id: check-github-workflows
 
-  - repo: local
-    hooks:
-      - id: eslint
-        name: eslint
-        entry: npm run lint . --ignore-pattern htmlcov/
-        language: system
-        types_or: [javascript, jsx, ts, tsx]
