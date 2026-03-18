@@ -3,6 +3,7 @@
 """
 White-box unit testing of book store.
 """
+
 import unittest
 from unittest.mock import patch
 
