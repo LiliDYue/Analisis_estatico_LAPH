@@ -45,9 +45,7 @@ repos:
     rev: v3.0.3
     hooks:
       - id: pylint
-        files: \.py$
-        additional_dependencies:
-          - requests
+        additional_dependencies: [requests]
 
   - repo: https://github.com/sirosen/check-jsonschema
     rev: 0.28.0
@@ -59,6 +57,6 @@ repos:
     hooks:
       - id: eslint
         name: eslint
-        entry: npm run lint
+        entry: npm run lint . --ignore-pattern htmlcov/
         language: system
         types_or: [javascript, jsx, ts, tsx]

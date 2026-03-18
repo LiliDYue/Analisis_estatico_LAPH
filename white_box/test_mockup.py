@@ -7,8 +7,6 @@ Unit tests for mock up.
 import unittest
 from unittest.mock import MagicMock, Mock, patch
 
-import requests
-
 from white_box.mockup_exercises import (
     execute_command,
     fetch_data_from_api,
