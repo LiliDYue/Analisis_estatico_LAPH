@@ -46,6 +46,8 @@ repos:
     hooks:
       - id: pylint
         files: \.py$
+        additional_dependencies:
+          - requests
 
   - repo: https://github.com/sirosen/check-jsonschema
     rev: 0.28.0

@@ -1,13 +1,20 @@
+# pylint: disable=line-too-long, too-many-lines
 # -*- coding: utf-8 -*-
 
 """
 White-box unit testing examples.
 """
+
 import unittest
+from unittest.mock import patch
 
 from white_box.class_exercises import (
+    BankAccount,
+    BankingSystem,
     DocumentEditingSystem,
     ElevatorSystem,
+    Product,
+    ShoppingCart,
     TrafficLight,
     UserAuthentication,
     VendingMachine,
@@ -940,3 +947,185 @@ class TestElevatorSystem(unittest.TestCase):
 
         self.assertEqual(self.elevator_system.state, "Idle")
         self.assertEqual(output, "Invalid operation in current state")
+
+
+# 27
+class TestBankAccount(unittest.TestCase):
+    """
+    White-box unittest class for the BankAccount class.
+    """
+
+    def test_view_account_prints_correctly(self):
+        """Test that view_account prints the correct account details."""
+        account = BankAccount("123ABC", 500)
+
+        with patch("builtins.print") as mocked_print:
+            account.view_account()
+            mocked_print.assert_called_with("The account 123ABC has a balance of 500")
+
+
+class TestBankingSystem(unittest.TestCase):
+    """
+    White-box unittest class for the BankingSystem class.
+    """
+
+    def setUp(self):
+        """Set up a BankingSystem instance before each test."""
+        self.system = BankingSystem()
+
+    def test_authenticate_successful(self):
+        """Test authentication with correct username and password."""
+        result = self.system.authenticate("user123", "pass123")
+        self.assertTrue(result)
+        self.assertIn("user123", self.system.logged_in_users)
+
+    def test_authenticate_already_logged_in(self):
+        """Test authentication when user is already logged in."""
+        self.system.logged_in_users.add("user123")
+        with patch("builtins.print") as mocked_print:
+            result = self.system.authenticate("user123", "pass123")
+            mocked_print.assert_called_with("User already logged in.")
+            self.assertFalse(result)
+
+    def test_authenticate_failure_wrong_password(self):
+        """Test authentication with wrong password."""
+        with patch("builtins.print") as mocked_print:
+            result = self.system.authenticate("user123", "wrongpass")
+            mocked_print.assert_called_with("Authentication failed.")
+            self.assertFalse(result)
+
+    def test_transfer_money_regular_success(self):
+        """Test a successful regular money transfer."""
+        self.system.logged_in_users.add("user123")
+        with patch("builtins.print") as mocked_print:
+            result = self.system.transfer_money(
+                "user123", "receiver456", 500, "regular"
+            )
+            mocked_print.assert_called_with(
+                "Money transfer of $500 (regular transfer) from user123 to receiver456 processed successfully."
+            )
+            self.assertTrue(result)
+
+    def test_transfer_money_express_success(self):
+        """Test a successful express money transfer."""
+        self.system.logged_in_users.add("user123")
+        with patch("builtins.print"):
+            result = self.system.transfer_money(
+                "user123", "receiver456", 200, "express"
+            )
+            self.assertTrue(result)
+
+    def test_transfer_money_scheduled_success(self):
+        """Test a successful scheduled money transfer."""
+        self.system.logged_in_users.add("user123")
+        with patch("builtins.print"):
+            result = self.system.transfer_money(
+                "user123", "receiver456", 50, "scheduled"
+            )
+            self.assertTrue(result)
+
+    def test_transfer_money_invalid_transaction_type(self):
+        """Test transfer fails with invalid transaction type."""
+        self.system.logged_in_users.add("user123")
+        with patch("builtins.print") as mocked_print:
+            result = self.system.transfer_money(
+                "user123", "receiver456", 100, "invalid_type"
+            )
+            mocked_print.assert_called_with("Invalid transaction type.")
+            self.assertFalse(result)
+
+    def test_transfer_money_sender_not_authenticated(self):
+        """Test transfer fails if sender is not logged in."""
+        with patch("builtins.print") as mocked_print:
+            result = self.system.transfer_money(
+                "user123", "receiver456", 100, "regular"
+            )
+            mocked_print.assert_called_with("Sender not authenticated.")
+            self.assertFalse(result)
+
+    def test_transfer_money_insufficient_funds(self):
+        """Test transfer fails if sender has insufficient funds."""
+        self.system.logged_in_users.add("user123")
+        # Amount + fee > 1000, BankAccount mock has balance 1000
+        with patch("builtins.print") as mocked_print:
+            result = self.system.transfer_money(
+                "user123", "receiver456", 990, "express"
+            )
+            mocked_print.assert_called_with("Insufficient funds.")
+            self.assertFalse(result)
+
+
+# 28
+class TestProduct(unittest.TestCase):
+    """
+    White-box unittest class for the Product class.
+    """
+
+    def test_view_product_returns_and_prints_msg(self):
+        """Test that view_product returns and prints the correct message."""
+        product = Product("Laptop", 1200)
+
+        with patch("builtins.print") as mocked_print:
+            result = product.view_product()
+            mocked_print.assert_called_with("The product Laptop has a price of 1200")
+            self.assertEqual(result, "The product Laptop has a price of 1200")
+
+
+class TestShoppingCart(unittest.TestCase):
+    """Unit tests for the ShoppingCart class."""
+
+    def setUp(self):
+        """Initialize a ShoppingCart and sample products."""
+        self.cart = ShoppingCart()
+        self.product1 = Product("Laptop", 1200)
+        self.product2 = Product("Mouse", 50)
+
+    def test_add_product_new_item(self):
+        """Test adding a new product to the cart."""
+        self.cart.add_product(self.product1, 2)
+        self.assertEqual(len(self.cart.items), 1)
+        self.assertEqual(self.cart.items[0]["quantity"], 2)
+        self.assertEqual(self.cart.items[0]["product"], self.product1)
+
+    def test_add_product_existing_item(self):
+        """Test adding quantity to an existing product in the cart."""
+        self.cart.add_product(self.product1, 1)
+        self.cart.add_product(self.product1, 3)
+        self.assertEqual(len(self.cart.items), 1)
+        self.assertEqual(self.cart.items[0]["quantity"], 4)
+
+    def test_remove_product_partial_quantity(self):
+        """Test removing less than total quantity of a product."""
+        self.cart.add_product(self.product1, 5)
+        self.cart.remove_product(self.product1, 2)
+        self.assertEqual(self.cart.items[0]["quantity"], 3)
+
+    def test_remove_product_exact_quantity(self):
+        """Test removing exactly the product quantity, item removed from cart."""
+        self.cart.add_product(self.product1, 3)
+        self.cart.remove_product(self.product1, 3)
+        self.assertEqual(len(self.cart.items), 0)
+
+    def test_remove_product_more_than_quantity(self):
+        """Test removing more than the quantity, item removed from cart."""
+        self.cart.add_product(self.product1, 2)
+        self.cart.remove_product(self.product1, 5)
+        self.assertEqual(len(self.cart.items), 0)
+
+    def test_view_cart_prints_correctly(self):
+        """Test that view_cart prints each item correctly."""
+        self.cart.add_product(self.product1, 2)
+        self.cart.add_product(self.product2, 3)
+        with patch("builtins.print") as mocked_print:
+            self.cart.view_cart()
+            mocked_print.assert_any_call("2 x Laptop - $2400")
+            mocked_print.assert_any_call("3 x Mouse - $150")
+
+    def test_checkout_prints_total_and_message(self):
+        """Test that checkout prints the correct total and message."""
+        self.cart.add_product(self.product1, 1)
+        self.cart.add_product(self.product2, 4)
+        with patch("builtins.print") as mocked_print:
+            self.cart.checkout()
+            mocked_print.assert_any_call("Total: $1400")
+            mocked_print.assert_any_call("Checkout completed. Thank you for shopping!")
