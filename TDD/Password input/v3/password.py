@@ -1,7 +1,9 @@
 """
     TESTS
 """
+
 import unittest
+
 
 class TestValidatePassword(unittest.TestCase):
 
@@ -14,12 +16,16 @@ class TestValidatePassword(unittest.TestCase):
     def test_invalid_password_short(self):
         with self.assertRaises(ValueError) as context:
             validate_password("abc123")
-        self.assertIn("The password must be at least 8 characters", str(context.exception))
+        self.assertIn(
+            "The password must be at least 8 characters", str(context.exception)
+        )
 
     def test_invalid_password_not_enough_numbers(self):
         with self.assertRaises(ValueError) as context:
             validate_password("abcdefgh")
-        self.assertIn("The password must contain at least 2 numbers", str(context.exception))
+        self.assertIn(
+            "The password must contain at least 2 numbers", str(context.exception)
+        )
 
     def test_invalid_password_both_conditions(self):
         with self.assertRaises(ValueError) as context:
@@ -31,13 +37,16 @@ class TestValidatePassword(unittest.TestCase):
     def test_invalid_password_one_number(self):
         with self.assertRaises(ValueError) as context:
             validate_password("abcdefg1")
-        self.assertIn("The password must contain at least 2 numbers", str(context.exception))
-
+        self.assertIn(
+            "The password must contain at least 2 numbers", str(context.exception)
+        )
 
 
 """
     METODO
 """
+
+
 def validate_password(password: str) -> bool:
     """
     Validates that the password:
@@ -61,5 +70,6 @@ def validate_password(password: str) -> bool:
 
     return True
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

@@ -1,7 +1,9 @@
 """
     TESTS
 """
+
 import unittest
+
 
 class TestValidatePassword(unittest.TestCase):
 
@@ -14,17 +16,24 @@ class TestValidatePassword(unittest.TestCase):
     def test_invalid_password_short(self):
         with self.assertRaises(ValueError) as context:
             validate_password("Abc12")
-        self.assertIn("The password must be at least 8 characters", str(context.exception))
+        self.assertIn(
+            "The password must be at least 8 characters", str(context.exception)
+        )
 
     def test_invalid_password_not_enough_numbers(self):
         with self.assertRaises(ValueError) as context:
             validate_password("Abcdefgh")
-        self.assertIn("The password must contain at least 2 numbers", str(context.exception))
+        self.assertIn(
+            "The password must contain at least 2 numbers", str(context.exception)
+        )
 
     def test_invalid_password_no_uppercase(self):
         with self.assertRaises(ValueError) as context:
             validate_password("abcd1234")
-        self.assertIn("The password must contain at least one capital letter", str(context.exception))
+        self.assertIn(
+            "The password must contain at least one capital letter",
+            str(context.exception),
+        )
 
     def test_invalid_password_no_uppercase_and_numbers(self):
         with self.assertRaises(ValueError) as context:
@@ -44,14 +53,15 @@ class TestValidatePassword(unittest.TestCase):
     def test_invalid_password_one_number(self):
         with self.assertRaises(ValueError) as context:
             validate_password("Abcdefg1")
-        self.assertIn("The password must contain at least 2 numbers", str(context.exception))
-
-
+        self.assertIn(
+            "The password must contain at least 2 numbers", str(context.exception)
+        )
 
 
 """
     METODO
 """
+
 
 def validate_password(password: str) -> bool:
     """
@@ -80,5 +90,6 @@ def validate_password(password: str) -> bool:
 
     return True
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

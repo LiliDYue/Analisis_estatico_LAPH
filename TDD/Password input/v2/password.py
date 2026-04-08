@@ -1,7 +1,9 @@
 """
     TESTS
 """
+
 import unittest
+
 
 class TestValidatePassword(unittest.TestCase):
 
@@ -14,33 +16,44 @@ class TestValidatePassword(unittest.TestCase):
     def test_invalid_password_less_than_8_chars(self):
         with self.assertRaises(ValueError) as context:
             validate_password("abc123")
-        self.assertEqual(str(context.exception), "The password must be at least 8 characters")
+        self.assertEqual(
+            str(context.exception), "The password must be at least 8 characters"
+        )
 
     def test_invalid_empty_password(self):
         with self.assertRaises(ValueError) as context:
             validate_password("")
-        self.assertEqual(str(context.exception), "The password must be at least 8 characters")
+        self.assertEqual(
+            str(context.exception), "The password must be at least 8 characters"
+        )
 
     def test_invalid_password_no_numbers(self):
         with self.assertRaises(ValueError) as context:
             validate_password("abcdefgh")
-        self.assertEqual(str(context.exception), "The password must contain at least 2 numbers")
+        self.assertEqual(
+            str(context.exception), "The password must contain at least 2 numbers"
+        )
 
     def test_invalid_password_only_one_number(self):
         with self.assertRaises(ValueError) as context:
             validate_password("abcdefg1")
-        self.assertEqual(str(context.exception), "The password must contain at least 2 numbers")
+        self.assertEqual(
+            str(context.exception), "The password must contain at least 2 numbers"
+        )
 
     def test_invalid_password_short_and_no_numbers(self):
         with self.assertRaises(ValueError) as context:
             validate_password("abc")
-        self.assertEqual(str(context.exception), "The password must be at least 8 characters")
-
+        self.assertEqual(
+            str(context.exception), "The password must be at least 8 characters"
+        )
 
 
 """
     METODO
 """
+
+
 def validate_password(password: str) -> bool:
     """
     Validates that the password:
@@ -57,5 +70,6 @@ def validate_password(password: str) -> bool:
 
     return True
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

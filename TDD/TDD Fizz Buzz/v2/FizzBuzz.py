@@ -1,6 +1,7 @@
 """
     PRUEBAS
 """
+
 import unittest
 
 
@@ -25,18 +26,20 @@ class TestFizzBuzz(unittest.TestCase):
     def test_returns_fizz_when_multiple_of_3(self):
         for number in [3, 6, 9, 12]:
             with self.subTest(number=number):
-                self.assertEqual(FizzBuzz(number), 'Fizz')
+                self.assertEqual(FizzBuzz(number), "Fizz")
 
     def test_does_not_return_fizz_when_not_multiple_of_3(self):
         for number in [1, 2, 4, 5]:
             with self.subTest(number=number):
-                self.assertNotEqual(FizzBuzz(number), 'Fizz')
+                self.assertNotEqual(FizzBuzz(number), "Fizz")
 
 
-""" 
+"""
     METODO v2
 """
+
+
 def FizzBuzz(number):
-    if(number % 3):
-        return 'Fizz'
-    return 'String'
+    if number % 3:
+        return "Fizz"
+    return "String"

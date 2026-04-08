@@ -1,6 +1,7 @@
 """
     PRUEBAS
 """
+
 import unittest
 
 
@@ -23,8 +24,10 @@ class TestFizzBuzz(unittest.TestCase):
                     FizzBuzz(invalid)
 
 
-""" 
+"""
     METODO v2
 """
+
+
 def FizzBuzz(number):
-    return 'String'
+    return "String"
