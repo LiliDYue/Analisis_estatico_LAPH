@@ -1,19 +1,16 @@
 """
 TESTS
 """
+
 import unittest
 
 
 class TestPointOfSale(unittest.TestCase):
-    """
-    Kata - Point of Sale
-
-    Create a simple app for scanning bar codes to sell products.
-    """
+    """Tests for PointOfSale."""
 
     @classmethod
     def setUpClass(cls):
-        """Set up reusable test data."""
+        """Set up test data."""
         cls.scan_test_data = [
             {"input": "12345", "output": "$7.25"},
             {"input": "23456", "output": "$12.50"},
@@ -29,33 +26,24 @@ class TestPointOfSale(unittest.TestCase):
         ]
 
     def test_scan(self):
-        """Test scanning individual barcodes."""
+        """Test scan."""
         for case in self.scan_test_data:
             with self.subTest(case=case):
                 pos = PointOfSale()
-                result = pos.scan(case["input"])
-                self.assertEqual(result, case["output"])
+                self.assertEqual(pos.scan(case["input"]), case["output"])
 
     def test_total(self):
-        """Test total calculation after multiple scans."""
+        """Test total."""
         for case in self.total_test_data:
             with self.subTest(case=case):
                 pos = PointOfSale()
                 for barcode in case["input"]:
                     pos.scan(barcode)
-                result = pos.total()
-                self.assertEqual(result, case["output"])
-
-
-"""
-METODO
-"""
+                self.assertEqual(pos.total(), case["output"])
 
 
 class PointOfSale:
-    """
-    Point of Sale system that scans barcodes and tracks a running total.
-    """
+    """Point of Sale system."""
 
     PRODUCTS = {
         "12345": 7.25,
@@ -63,15 +51,11 @@ class PointOfSale:
     }
 
     def __init__(self):
-        """Initialize total amount."""
+        """Initialize POS."""
         self._total = 0.0
 
     def scan(self, barcode: str) -> str:
-        """
-        Scan a barcode and return its price or an error message.
-
-        Valid prices are accumulated in the running total.
-        """
+        """Scan barcode."""
         if not barcode:
             return "Error: empty barcode"
 
@@ -83,9 +67,7 @@ class PointOfSale:
         return f"${price:.2f}"
 
     def total(self) -> str:
-        """
-        Return the sum of all successfully scanned product prices.
-        """
+        """Return total."""
         return f"${self._total:.2f}"
 
 

@@ -1,25 +1,22 @@
 """
 TESTS
 """
+
 import json
 import os
 import unittest
+
 from ddt import data, ddt, unpack
 
 
 @ddt
 class TestCitySearch(unittest.TestCase):
-    """Tests for city search functionality."""
+    """Tests for city search."""
 
-    @data(
-        ("",),
-        ("V",),
-        ("a",),
-        ("1",),
-    )
+    @data(("",), ("V",), ("a",), ("1",))
     @unpack
     def test_fewer_than_2_chars_returns_no_results(self, text):
-        """Req 1: fewer than 2 chars → no results."""
+        """Test short inputs."""
         self.assertEqual(search_cities(text), [])
 
     @data(
@@ -30,7 +27,7 @@ class TestCitySearch(unittest.TestCase):
     )
     @unpack
     def test_prefix_match(self, text, expected):
-        """Req 2: 2+ chars → cities that contain the search text."""
+        """Test prefix."""
         result = search_cities(text)
         self.assertEqual(sorted(result), sorted(expected))
 
@@ -43,7 +40,7 @@ class TestCitySearch(unittest.TestCase):
     )
     @unpack
     def test_case_insensitive(self, text, expected):
-        """Req 3: case insensitive."""
+        """Test case insensitive."""
         result = search_cities(text)
         self.assertEqual(sorted(result), sorted(expected))
 
@@ -56,25 +53,19 @@ class TestCitySearch(unittest.TestCase):
     )
     @unpack
     def test_partial_match_contains_city(self, text, expected_city):
-        """Req 4: partial match anywhere in the city name."""
+        """Test partial match."""
         self.assertIn(expected_city, search_cities(text))
 
-    @data(
-        ("*", 16),
-    )
+    @data(("*", 16))
     @unpack
     def test_asterisk_returns_all_cities(self, text, expected_count):
-        """Req 5: '*' returns all cities."""
+        """Test wildcard."""
         result = search_cities(text)
         self.assertEqual(len(result), expected_count)
 
         for city in CITIES:
             self.assertIn(city, result)
 
-
-"""
-METODO
-"""
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -83,7 +74,7 @@ with open(os.path.join(CURRENT_DIR, "cities.json"), encoding="utf-8") as file:
 
 
 def search_cities(text: str) -> list[str]:
-    """Search cities based on input text."""
+    """Search cities."""
     if text == "*":
         return list(CITIES)
 
@@ -96,4 +87,3 @@ def search_cities(text: str) -> list[str]:
 
 if __name__ == "__main__":
     unittest.main()
-    

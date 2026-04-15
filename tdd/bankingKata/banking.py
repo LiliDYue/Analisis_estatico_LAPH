@@ -1,24 +1,24 @@
 """
 TESTS
 """
+
+# pylint: disable=protected-access
+
+import contextlib
+import datetime
 import io
 import unittest
-import contextlib
 from unittest.mock import patch
 
 
 class TestAccount(unittest.TestCase):
-    """
-    Kata - Banking
-
-    Create a simple bank application with deposit, withdraw, and printStatement.
-    """
+    """Tests for Account."""
 
     FIXED_DATE = "13/04/2026"
 
     @classmethod
     def setUpClass(cls):
-        """Set up reusable test data."""
+        """Set up test data."""
         cls.deposit_test_data = [
             {"input": [1000], "expected_balance": 1000},
             {"input": [1000, 2000], "expected_balance": 3000},
@@ -33,10 +33,7 @@ class TestAccount(unittest.TestCase):
         cls.statement_test_data = [
             {
                 "operations": [("deposit", 1000)],
-                "expected": (
-                    "DATE | AMOUNT | BALANCE\n"
-                    "13/04/2026 | 1000 | 1000"
-                ),
+                "expected": "DATE | AMOUNT | BALANCE\n13/04/2026 | 1000 | 1000",
             },
             {
                 "operations": [("deposit", 1000), ("withdraw", 500)],
@@ -72,7 +69,7 @@ class TestAccount(unittest.TestCase):
         return account
 
     def _capture_statement(self, account):
-        """Capture printed statement output."""
+        """Capture printed statement."""
         buffer = io.StringIO()
         with contextlib.redirect_stdout(buffer):
             account.printStatement()
@@ -80,7 +77,7 @@ class TestAccount(unittest.TestCase):
 
     @patch("__main__.datetime.date")
     def test_deposit(self, mock_date):
-        """Test deposits update balance correctly."""
+        """Test deposit."""
         mock_date.today.return_value.strftime.return_value = self.FIXED_DATE
 
         for case in self.deposit_test_data:
@@ -92,7 +89,7 @@ class TestAccount(unittest.TestCase):
 
     @patch("__main__.datetime.date")
     def test_withdraw(self, mock_date):
-        """Test withdrawals update balance correctly."""
+        """Test withdraw."""
         mock_date.today.return_value.strftime.return_value = self.FIXED_DATE
 
         for case in self.withdraw_test_data:
@@ -106,7 +103,7 @@ class TestAccount(unittest.TestCase):
 
     @patch("__main__.datetime.date")
     def test_print_statement(self, mock_date):
-        """Test printed statement format and content."""
+        """Test print statement."""
         mock_date.today.return_value.strftime.return_value = self.FIXED_DATE
 
         for case in self.statement_test_data:
@@ -116,36 +113,29 @@ class TestAccount(unittest.TestCase):
                 self.assertEqual(output, case["expected"])
 
 
-"""
-METODO
-"""
-import datetime
-
-
+# pylint: disable=invalid-name
 class Account:
-    """
-    Simple bank account supporting deposit, withdraw, and printStatement.
-    """
+    """Bank account."""
 
     def __init__(self):
-        """Initialize account with zero balance."""
+        """Initialize account."""
         self._balance = 0
         self._transactions = []
 
     def deposit(self, amount: int):
-        """Deposit money into account."""
+        """Deposit money."""
         self._balance += amount
         date = datetime.date.today().strftime("%d/%m/%Y")
         self._transactions.append((date, amount, self._balance))
 
     def withdraw(self, amount: int):
-        """Withdraw money from account."""
+        """Withdraw money."""
         self._balance -= amount
         date = datetime.date.today().strftime("%d/%m/%Y")
         self._transactions.append((date, -amount, self._balance))
 
     def printStatement(self):
-        """Print account statement."""
+        """Print statement."""
         print("DATE | AMOUNT | BALANCE")
         for date, amount, balance in reversed(self._transactions):
             print(f"{date} | {amount} | {balance}")
