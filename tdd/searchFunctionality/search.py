@@ -96,3 +96,4 @@ def search_cities(text: str) -> list[str]:
 
 if __name__ == "__main__":
     unittest.main()
+    
