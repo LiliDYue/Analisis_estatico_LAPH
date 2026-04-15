@@ -1,71 +1,80 @@
 """
 TESTS
 """
-
 import json
 import os
 import unittest
 
-from ddt import data, ddt, unpack
 
-
-@ddt
 class TestCitySearch(unittest.TestCase):
-    """Tests for city search."""
+    """Tests for city search functionality."""
 
-    @data(("",), ("V",), ("a",), ("1",))
-    @unpack
-    def test_fewer_than_2_chars_returns_no_results(self, text):
-        """Test short inputs."""
-        self.assertEqual(search_cities(text), [])
+    @classmethod
+    def setUpClass(cls):
+        """Set up test data."""
+        cls.fewer_than_2_cases = ["", "V", "a", "1"]
 
-    @data(
-        ("Va", ["Valencia", "Vancouver"]),
-        ("Rom", ["Rome"]),
-        ("Par", ["Paris"]),
-        ("Xy", []),
-    )
-    @unpack
-    def test_prefix_match(self, text, expected):
-        """Test prefix."""
-        result = search_cities(text)
-        self.assertEqual(sorted(result), sorted(expected))
+        cls.prefix_cases = [
+            {"input": "Va", "output": ["Valencia", "Vancouver"]},
+            {"input": "Rom", "output": ["Rome"]},
+            {"input": "Par", "output": ["Paris"]},
+            {"input": "Xy", "output": []},
+        ]
 
-    @data(
-        ("va", ["Valencia", "Vancouver"]),
-        ("VA", ["Valencia", "Vancouver"]),
-        ("Va", ["Valencia", "Vancouver"]),
-        ("par", ["Paris"]),
-        ("PAR", ["Paris"]),
-    )
-    @unpack
-    def test_case_insensitive(self, text, expected):
-        """Test case insensitive."""
-        result = search_cities(text)
-        self.assertEqual(sorted(result), sorted(expected))
+        cls.case_insensitive_cases = [
+            {"input": "va", "output": ["Valencia", "Vancouver"]},
+            {"input": "VA", "output": ["Valencia", "Vancouver"]},
+            {"input": "Va", "output": ["Valencia", "Vancouver"]},
+            {"input": "par", "output": ["Paris"]},
+            {"input": "PAR", "output": ["Paris"]},
+        ]
 
-    @data(
-        ("ape", "Budapest"),
-        ("ong", "Hong Kong"),
-        ("kok", "Bangkok"),
-        ("dam", "Amsterdam"),
-        ("dam", "Rotterdam"),
-    )
-    @unpack
-    def test_partial_match_contains_city(self, text, expected_city):
-        """Test partial match."""
-        self.assertIn(expected_city, search_cities(text))
+        cls.partial_match_cases = [
+            {"input": "ape", "output": "Budapest"},
+            {"input": "ong", "output": "Hong Kong"},
+            {"input": "kok", "output": "Bangkok"},
+            {"input": "dam", "output": "Amsterdam"},
+            {"input": "dam", "output": "Rotterdam"},
+        ]
 
-    @data(("*", 16))
-    @unpack
-    def test_asterisk_returns_all_cities(self, text, expected_count):
-        """Test wildcard."""
-        result = search_cities(text)
-        self.assertEqual(len(result), expected_count)
+    def test_fewer_than_2_chars_returns_no_results(self):
+        """Req 1: fewer than 2 chars → no results."""
+        for text in self.fewer_than_2_cases:
+            with self.subTest(text=text):
+                self.assertEqual(search_cities(text), [])
+
+    def test_prefix_match(self):
+        """Req 2: prefix match."""
+        for case in self.prefix_cases:
+            with self.subTest(case=case):
+                result = search_cities(case["input"])
+                self.assertEqual(sorted(result), sorted(case["output"]))
+
+    def test_case_insensitive(self):
+        """Req 3: case insensitive."""
+        for case in self.case_insensitive_cases:
+            with self.subTest(case=case):
+                result = search_cities(case["input"])
+                self.assertEqual(sorted(result), sorted(case["output"]))
+
+    def test_partial_match_contains_city(self):
+        """Req 4: partial match."""
+        for case in self.partial_match_cases:
+            with self.subTest(case=case):
+                self.assertIn(case["output"], search_cities(case["input"]))
+
+    def test_asterisk_returns_all_cities(self):
+        """Req 5: '*' returns all cities."""
+        result = search_cities("*")
+        self.assertEqual(len(result), len(CITIES))
 
         for city in CITIES:
             self.assertIn(city, result)
 
+
+# =====================
+# METODO
+# =====================
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -74,7 +83,7 @@ with open(os.path.join(CURRENT_DIR, "cities.json"), encoding="utf-8") as file:
 
 
 def search_cities(text: str) -> list[str]:
-    """Search cities."""
+    """Search cities based on input text."""
     if text == "*":
         return list(CITIES)
 
